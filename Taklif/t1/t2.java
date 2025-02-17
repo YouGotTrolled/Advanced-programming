@@ -2,9 +2,9 @@
 public class t2{
     static int t=1;
     public static void main(String[] args){
-        //System.out.println(fibunaji(80,0,1));
         BInteger f1=new BInteger();
         BInteger f2=new BInteger();
+        f1.add(1);
         f2.add(1);
         System.out.println(fibunajiBig(100,f1,f2).toString());
     }
@@ -15,8 +15,6 @@ public class t2{
             return(fibunaji(n-1,f2,f1+f2));
     }
     public static BInteger fibunajiBig(int n,BInteger f1,BInteger f2){
-        System.out.println((t++));
-        System.out.println(f1.toString());
         if(n==1){
             return(f1);
         }
@@ -57,34 +55,20 @@ public class BInteger{
         }while(sum>0);
     }
     public void add(BInteger x){
-        int sum=-1;
+        int sum=0;
         int i=0;
         while(x.bint.length>bint.length){
             extend();
         }
         for(;i<x.bint.length;i++){
-            sum=x.bint[i]+bint[i];
-            if (sum>999999999){
-                bint[i++]=sum%1000000000;
-                if(i==bint.length)
-                    extend();
-                sum/=1000000000;
-            }else{
-                bint[i]=sum;
-                sum=-1;
-            }
+            sum+=x.bint[i]+bint[i];
+            bint[i]=sum%1000000000;
+            sum/=1000000000;
         }
-        while(sum>0){
-            sum+=bint[--i];
-            if (sum>999999999){
-                bint[i++]=(int)sum%1000000000;
-                if(i==bint.length)
-                    extend();
-                sum/=1000000000;
-            }else{
-                bint[i]=(int)sum;
-                sum=-1;
-            }
+        if(sum>0){
+            if(i==bint.length)
+                extend();
+            bint[i]=sum;
         }
     }
     private void extend(){
